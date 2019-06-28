@@ -12,7 +12,7 @@ micro-service-docker
 ##### Setup
 
 ```
-git clone https://gitlab.produbanbr.corp/angariador/offer-service.git
+git clone https://github.com/GuilhermeLaia/microservice-docker.git
 mvn clean install
 mvn spring-boot:run
 ```
