@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="Guilherme Laia (generated)" id="1557848847830-1">
+        <createTable tableName="TB_MODEL">
+            <column name="ID" type="NUMBER(*, 0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="VARCHAR2(100)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Guilherme Laia (generated)" id="1557848847830-21">
+        <createIndex indexName="SYS_C0011646" tableName="TB_MODEL" unique="true">
+            <column name="ID"/>
+        </createIndex>
+        <addPrimaryKey columnNames="ID" constraintName="SYS_C0011646" forIndexName="SYS_C0011646" tableName="TB_MODEL"/>
+    </changeSet>
+</databaseChangeLog>

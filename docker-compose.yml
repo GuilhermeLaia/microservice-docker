@@ -1,0 +1,52 @@
+version: '3.2'
+
+services:
+
+  oracle:
+    container_name: oracledb
+    image: 
+    restart: always
+    volumes:
+     - ./data:/ORCL
+    ports:
+       - 1521:1521
+       - 5500:5500
+    networks: 
+      - app
+    environment:  
+      - ORACLE_SID=ORCLCDB
+      - ORACLE_PDB=ORCLPDB1
+      - ORACLE_PWD=oracle
+     
+  app:
+    container_name: micro-service
+    build: .
+    links:
+      - oracle
+    restart: always
+    depends_on:
+      - oracle
+    networks:
+      - app
+    ports:
+     - 8090:8090
+    volumes:
+    - .:/var/code
+    environment:
+     - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -Dcom.sun.management.jmxremote -Djava.rmi.server.hostname=app -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.rmi.port=1099 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false
+     - spring.datasource.url=jdbc:oracle:thin:@oracle:1521/ORCLPDB1.localdomain
+     - spring.datasource.username=sys as sysdba
+     - spring.datasource.password=Oradoc_db1
+     - spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+     - spring.jpa.database-platform=org.hibernate.dialect.Oracle10gDialect
+     - spring.jpa.show-sql=true
+     - spring.liquibase.change-log=classpath:database/liquibase/docker/liquibase-changeLog.xml
+     
+    logging:
+       options:
+          max-size: 50m
+     
+networks: 
+  app:
+  
+#Para rodar no docker, apenas execute docker-compose up
